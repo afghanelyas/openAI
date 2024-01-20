@@ -15,3 +15,30 @@ Route::get('/', function () {
     return view('welcome', ['poem' => $sillyPoem]);
 
 });
+
+Route::get('/roast', function () {
+    return view('roast');
+})->name('roast');
+
+Route::post('/roast', function () {
+
+    $arttributes = request()->validate([
+        'topic' => 'required', 'string', 'min:3', 'max:50',
+    ]);
+
+    $prompt = "Please roast {$arttributes['topic']} in a saracatic tone.";
+
+    $mp3 = (new Chat())->send(
+        message: $prompt,
+        speech: true,
+    );
+    $file = 'roasts/'.md5($mp3).'.mp3';
+    file_put_contents(
+        public_path($file), $mp3
+    );
+
+    return redirect('/roast')->with([
+        'file' => $file,
+        'flash' => 'Here is your roast.',
+    ]);
+});
