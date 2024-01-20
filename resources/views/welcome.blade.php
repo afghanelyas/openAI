@@ -7,9 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>AI Poem</title>
 </head>
-<body class="h-full grid place-items-center p-6 "> 
-    <div class="text-xs font-snas">
+<body class="h-full grid place-items-center p-6 bg-gray-300 "> 
+    <div class="text-xs font-snas ">
         {!! nl2br($poem) !!}
+        <a href="{{ route('roast') }}">
+            <button class="p-2 bg-blue-200">Roast</button>
+        </a>
     </div>
 </body>
 </html>
